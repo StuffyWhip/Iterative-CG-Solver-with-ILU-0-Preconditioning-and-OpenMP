@@ -15,17 +15,17 @@
 **Diagonal regularization** A<-A+σI
 
 **Parallel execution** of all hot spots via OpenMP: 
-  SpMV (CRS × vector) 
+  SpMV (CRS × vector)  
   dot products  
-  AXPY (vector updates)
+  AXPY (vector updates)  
   forward/back substitution for ILU(0)  
   
 **Configurable via command-line options**:  
-  tolerance --epsilon 
-  max iterations --max_iter 
-  number of threads --threads 
-  restart frequency --restart 
-  disable preconditioning --no-precond
+  tolerance ```--epsilon```  
+  max iterations ```--max_iter```  
+  number of threads ```--threads```  
+  restart frequency ```--restart```  
+  disable preconditioning ```--no-precond```  
 
 ---
 #  Build and Installation
