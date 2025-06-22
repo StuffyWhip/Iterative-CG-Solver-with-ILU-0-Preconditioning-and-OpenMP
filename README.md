@@ -1,30 +1,47 @@
-# Iterative CG Solver с ILU(0)-предобусловливанием и OpenMP
+# Iterative CG Solver with ILU(0) Preconditioning and OpenMP
 
-**Программа реализованная на C++** для решения больших разреженных симметричных положительно определённых систем**Ax=b** методом сопряжённых градиентов (CG) с предобусловливателем ILU(0) (с Jacobi) и полной параллельностью через OpenMP.
+**A C++ application** for solving large sparse symmetric positive-definite systems **Ax=b** using the Conjugate Gradient (CG) method with ILU(0) preconditioning (with Jacobi fallback) and full parallelization via OpenMP.
 
-## Ключевые возможности
+## Key Features
 
-**Conjugate Gradient** (CG) с рестартами 
+**Conjugate Gradient** (CG) with restarts
 
-**ILU(0)** неполное LU-разложение без fill-in + Jacobi-фолбэк 
+**ILU(0)** incomplete LU factorization without fill-in + Jacobi fallback
 
-**Опциональное** выключение предобусловливателя (--no-precond) для чистого CG
+**Optional** preconditioner disable (--no-precond) for pure CG
 
-**RCM-перестановка** для сжатия профиля матрицы  
+**RCM permutation** (Reverse Cuthill–McKee) to reduce matrix bandwidth/profile
 
-**Диагональная регуляризация** A<-A+σI
+**Diagonal regularization** A<-A+σI
 
-**Параллельность** всех «горячих» участков через OpenMP:  
-  SpMV (CRS×вектор)  
-  dot-продукты  
-  AXPY (векторные обновления)  
-  direct/back solve для ILU(0)  
+**Parallel execution** of all hot spots via OpenMP: 
+  SpMV (CRS × vector) 
+  dot products  
+  AXPY (vector updates)
+  forward/back substitution for ILU(0)  
   
-**Настраиваемые**:  
-  точность --epsilon  
-  макс. итераций --max_iter  
-  число потоков --threads  
-  рестарт --restart  
-  отключение предобусловливателя --no-precond (0/1)
+**Configurable via command-line options**:  
+  tolerance --epsilon 
+  max iterations --max_iter 
+  number of threads --threads 
+  restart frequency --restart 
+  disable preconditioning --no-precond
 
 ---
+#  Build and Installation
+bash
+
+```
+git clone https://github.com/User/Iterative-CG-Solver-with-ILU-0-Preconditioning-and-OpenMP.git
+cd Iterative-CG-Solver-with-ILU-0-Preconditioning-and-OpenMP
+qmake project.pro
+make -j$(nproc)
+```
+To build without any preconditioning (pure CG):
+```
+qmake project.pro "DEFINES+=NO_PRECOND"
+make -j$(nproc)
+```
+Site with matrixes https://sparse.tamu.edu/. 
+1) Downdlaod "Matrix market" format for chosen matrix.
+2) Put "name".mtx and rhs.txt into project_name/build/build_version/ folder
